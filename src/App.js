@@ -1,23 +1,52 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [users, setUsers]= useState([]);
+  const [isLoading, setIsLoading]= useState(true);
+  const [name, setName]= useState('');
+  const [job, setJob]= useState('');
+
+  useEffect(() => {
+   handleFetchUsers();
+
+  }, [])
+
+  const handleFetchUsers = async () => {
+    const response = await fetch('https://reqres.in/api/users');
+    const users = await response.json();
+    setUsers(users.data);
+    setIsLoading(false);
+  }
+
+  //Ponerle try/catch
+  const handlePostUser = async () => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: 'Diego', job: 'Farmer' })
+    };
+
+    //checar como se maneja sí hay error
+    const response = await fetch('https://reqres.in/api/users', requestOptions);
+    const data = await response.json();
+    console.log(data);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+    {
+      isLoading 
+      ?
+      <h1>Loading Data</h1>
+      :
+        <div>
+        { users.map(user => <h1 key={user.id}>{user.email}</h1>) }
+        <button onClick={handlePostUser}>Post</button>
+          <input label='name' value={name} onChange={(e) => setName(e.target.value)} />
+          <input label='job' value={job} onChange={(e) => setJob(e.target.value)} />
+        </div>
+    }
     </div>
   );
 }
