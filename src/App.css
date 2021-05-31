@@ -1,9 +1,26 @@
-.app-container {
-  text-align: center;
+.app {
   display: flex;
-  min-height: 100vh;
   flex-direction: column;
+  min-height: 100vh;
   align-items: center;
   justify-content: center;
-  background-color: #2a4d69;
+  background-color: #faf9f9;
+  text-align: center;
+}
+
+.app-container {
+  display: flex;
+}
+
+.app-container-left {
+  width: 75%;
+  display: flex;
+  align-self: flex-start;
+}
+
+.app-container-right {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-self: flex-start;
 }
