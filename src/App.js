@@ -11,7 +11,7 @@ const App = () => {
 
   useEffect(() => {
       handleFetchUsers();
-  }, [])
+  }, [hasError])
 
   const handleFetchUsers = async () => {
     try{
@@ -46,7 +46,7 @@ const App = () => {
         setUsers((users) => [...users, newUser]);
 
       } catch(e) {
-          setHasError(true);
+        alert('Error posting User');
     }
   }
 
